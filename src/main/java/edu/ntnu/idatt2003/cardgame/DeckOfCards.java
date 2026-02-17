@@ -34,4 +34,8 @@ public class DeckOfCards {
 
     return new Hand(deck.subList(0, n));
   }
+
+  public List<PlayingCard> getPlayingCards() {
+    return deck;
+  }
 }
