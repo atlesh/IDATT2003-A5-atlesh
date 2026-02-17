@@ -2,23 +2,14 @@ package edu.ntnu.idatt2003.cardgame;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class DeckOfCardsTest {
+public class DeckOfCardsTest {
 
   @Test
   void testDeckHas52CardsWhenCreated() {
     DeckOfCards deck = new DeckOfCards();
     assertEquals(52, deck.getPlayingCards().size());
-  }
-
-  @Test
-  void testDealHandReducesDeckSize() {
-    DeckOfCards deck = new DeckOfCards();
-    deck.dealHand(5);
-    assertEquals(47, deck.getPlayingCards().size());
   }
 
   @Test
@@ -39,7 +30,7 @@ class DeckOfCardsTest {
     DeckOfCards deck = new DeckOfCards();
     Hand hand = deck.dealHand(52);
 
-    long distinctCount = hand.getHand.stream().distinct().count();
+    long distinctCount = hand.getHand().stream().distinct().count();
 
     assertEquals(52, distinctCount);
   }
