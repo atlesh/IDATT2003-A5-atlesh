@@ -50,4 +50,8 @@ public class Hand {
 
     return sum;
   }
+
+  public List<PlayingCard> getHand() {
+    return hand;
+  }
 }
