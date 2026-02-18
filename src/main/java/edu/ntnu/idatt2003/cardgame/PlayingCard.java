@@ -39,12 +39,29 @@ public class PlayingCard {
 
   /**
    * Returns the suit and face of the card as a string.
-   * A 4 of hearts is returned as the string "H4".
+   * A 4 of hearts is returned as the string "4♥".
+   *
    *
    * @return the suit and face of the card as a string
    */
   public String getAsString() {
-    return String.format("%s%s", suit, face);
+    String faceStr;
+    switch (face) {
+      case 1 -> faceStr = "A";
+      case 11 -> faceStr = "J";
+      case 12 -> faceStr = "Q";
+      case 13 -> faceStr = "K";
+      default -> faceStr = String.valueOf(face);
+    }
+
+    String suitStr;
+    return switch (suit) {
+      case 'S' -> faceStr + "♠";
+      case 'H' -> faceStr + "♥";
+      case 'D' -> faceStr + "♦";
+      case 'C' -> faceStr + "♣";
+      default -> faceStr + suit; // fallback
+    };
   }
 
   /**
