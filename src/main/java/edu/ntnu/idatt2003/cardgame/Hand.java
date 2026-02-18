@@ -26,7 +26,7 @@ public class Hand {
       return false;
     }
 
-    char firstSuit = hand.get(0).getSuit();
+    char firstSuit = hand.getFirst().getSuit();
 
     for (PlayingCard card : hand) {
       if (card.getSuit() !=  firstSuit) {
