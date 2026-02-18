@@ -58,8 +58,8 @@ public class Main extends Application {
     Button dealButton = new Button("Deal Hand");
     dealButton.setOnAction(e -> {
         hand = deck.dealHand(5);
-        System.out.println("Dealt hand: " + hand.getHand());
-        handText.setText("Deal hand: " + hand.getHand());
+        System.out.println("Dealt hand: " + hand);
+        handText.setText("Deal hand: " + hand);
     });
 
     Button flushButton = new Button("Check Flush");
