@@ -54,4 +54,18 @@ public class Hand {
   public List<PlayingCard> getHand() {
     return hand;
   }
+
+  /**
+   * Creates a String of a hand of cards.
+   * Example: A♠ 10♥ K♦ 3♣ 7♠.
+   * @return Hand to String format.
+   */
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (PlayingCard card : hand) {
+      sb.append(card.getAsString()).append(" ");
+    }
+    return sb.toString().trim();
+  }
 }
