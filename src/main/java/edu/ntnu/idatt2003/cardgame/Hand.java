@@ -18,23 +18,40 @@ public class Hand {
   }
 
   /**
-   * Checks if hand is flush (All cards have same suit).
+   * Method checks if hand is flush (All cards have same suit).
    * @return boolean: true if hand is flush or boolean: false if hand is not flush.
    */
   public boolean isFlush() {
-    if (hand.isEmpty()) {
-      return false;
-    }
+    if (hand.isEmpty()) return false;
 
     char firstSuit = hand.getFirst().getSuit();
+    return hand.stream().allMatch(card -> card.getSuit() == firstSuit);
+  }
 
-    for (PlayingCard card : hand) {
-      if (card.getSuit() !=  firstSuit) {
-        return false;
-      }
-    }
+  /**
+   * Method checks if hand contains card queen of spades,
+   * and returns answer Yes or No.
+   * @return Yes or No
+   */
+  public String checkQueenOfSpades() {
+    boolean found = hand.stream()
+        .anyMatch(card ->
+            card.getFace() == 12 && card.getSuit() == 'S');
+    return found ? "Yes" : "No";
+  }
 
-    return true;
+  /**
+   * Method returns all cards of suit hearts.
+   * Returns No Hearts if no cards of hearts.
+   * @return All cards of hearts as String
+   */
+  public String getHearts() {
+    String hearts = hand.stream()
+        .filter(card -> card.getSuit() == 'H')
+        .map(PlayingCard::getAsString)
+        .collect(java.util.stream.Collectors.joining());
+
+    return hearts.isEmpty() ? "No Hearts" : hearts;
   }
 
   /**
@@ -42,13 +59,9 @@ public class Hand {
    * @return int: sum
    */
   public int getSum() {
-    int sum = 0;
-
-    for (PlayingCard card : hand) {
-      sum += card.getFace();
-    }
-
-    return sum;
+    return hand.stream()
+        .mapToInt(PlayingCard::getFace)
+        .sum();
   }
 
   public List<PlayingCard> getHand() {
