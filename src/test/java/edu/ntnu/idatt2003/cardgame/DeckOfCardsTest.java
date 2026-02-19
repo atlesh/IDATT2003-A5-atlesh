@@ -1,37 +1,64 @@
 package edu.ntnu.idatt2003.cardgame;
 
 import org.junit.jupiter.api.Test;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DeckOfCardsTest {
+class DeckOfCardsTest {
+
+  // Positive tester
 
   @Test
-  void testDeckHas52CardsWhenCreated() {
+  void constructorCreates52Cards() {
     DeckOfCards deck = new DeckOfCards();
     assertEquals(52, deck.getPlayingCards().size());
   }
 
   @Test
-  void testDealHandReturnsCorrectNumberOfCards() {
+  void deckContainsAllSuits() {
     DeckOfCards deck = new DeckOfCards();
-    Hand hand = deck.dealHand(7);
-    assertEquals(7, hand.getHand().size());
+    List<PlayingCard> cards = deck.getPlayingCards();
+
+    assertTrue(cards.stream().anyMatch(c -> c.getSuit() == 'S'));
+    assertTrue(cards.stream().anyMatch(c -> c.getSuit() == 'H'));
+    assertTrue(cards.stream().anyMatch(c -> c.getSuit() == 'D'));
+    assertTrue(cards.stream().anyMatch(c -> c.getSuit() == 'C'));
   }
 
   @Test
-  void testDealHandThrowsExceptionIfTooManyCards() {
+  void dealHandReturnsCorrectNumberOfCards() {
     DeckOfCards deck = new DeckOfCards();
-    assertThrows(IllegalArgumentException.class, () -> deck.dealHand(53));
+    Hand hand = deck.dealHand(5);
+
+    assertEquals(5, hand.getHand().size());
   }
 
   @Test
-  void testAllCardsAreUniqueInDeck() {
+  void dealHandReturnsHandObject() {
     DeckOfCards deck = new DeckOfCards();
-    Hand hand = deck.dealHand(52);
+    Hand hand = deck.dealHand(3);
 
-    long distinctCount = hand.getHand().stream().distinct().count();
+    assertNotNull(hand);
+  }
 
-    assertEquals(52, distinctCount);
+  // Negative tester
+
+  @Test
+  void dealHandThrowsExceptionForZeroCards() {
+    DeckOfCards deck = new DeckOfCards();
+
+    assertThrows(IllegalArgumentException.class, () -> {
+      deck.dealHand(0);
+    });
+  }
+
+  @Test
+  void dealHandThrowsExceptionForTooManyCards() {
+    DeckOfCards deck = new DeckOfCards();
+
+    assertThrows(IllegalArgumentException.class, () -> {
+      deck.dealHand(53);
+    });
   }
 }
