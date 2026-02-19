@@ -22,84 +22,92 @@ public class Main extends Application {
   @Override
   public void start(Stage stage) throws Exception {
 
-    Text text = new Text("Card Game");
-    text.setFont(Font.font("Arial", FontWeight.LIGHT, 20));
-    text.setFill(Color.WHITE);
-    StackPane textBox = new StackPane(text);
-    textBox.setStyle(
-        "-fx-background-color: #40c140; " +
-        "-fx-background-radius: 5;" +
-        "-fx-padding:20; " +
-        "-fx-border-radius: 5;"
-    );
-    textBox.setLayoutX(25.0);
-    textBox.setLayoutY(25.0);
-
     DeckOfCards deck = new DeckOfCards();
 
+    //TEXT
+
+    Text text = new Text("Card Game");
+    text.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+    text.setFill(Color.WHITE);
+
     Text handText = new Text("Dealt Hand: ");
-    handText.setFont(Font.font("Arial", FontWeight.LIGHT, 12));
-    handText.setFill(Color.BLACK);
-    handText.setLayoutX(25.0);
+    handText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    handText.setLayoutX(15.0);
     handText.setLayoutY(25.0);
 
     Text flushText = new Text("Flush: ");
-    flushText.setFont(Font.font("Arial", FontWeight.LIGHT, 12));
-    flushText.setFill(Color.BLACK);
-    flushText.setLayoutX(750.0);
+    flushText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+    flushText.setLayoutX(150.0);
     flushText.setLayoutY(25.0);
 
     Text sumText = new Text("Face Sum: ");
-    sumText.setFont(Font.font("Arial", FontWeight.LIGHT, 12));
-    sumText.setFill(Color.BLACK);
-    sumText.setLayoutX(750.0);
+    sumText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+    sumText.setLayoutX(150.0);
     sumText.setLayoutY(50.0);
+
+    Text heartsText = new Text("Cards of hearts: ");
+    heartsText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+    heartsText.setLayoutX(250.0);
+    heartsText.setLayoutY(25.0);
+
+    Text spadeQueenText = new Text("Queen of spades: ");
+    spadeQueenText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+    spadeQueenText.setLayoutX(250.0);
+    spadeQueenText.setLayoutY(50.0);
+
+    Text nullText = new Text();
+    nullText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+    nullText.setLayoutX(150.0);
+    nullText.setLayoutY(85.0);
+
+    //CONTROLLERS
 
     Button dealButton = new Button("Deal Hand");
     dealButton.setOnAction(e -> {
+        nullText.setText("");
         hand = deck.dealHand(5);
-        System.out.println("Dealt hand: " + hand);
-        handText.setText("Deal hand: " + hand);
+        handText.setText("Dealt hand:\n" + hand);
     });
 
-    Button flushButton = new Button("Check Flush");
+    Button flushButton = new Button("Check hand");
     flushButton.setOnAction(e -> {
       if (hand == null) {
-        System.out.println("No hand dealt yet!");
-        flushText.setText("Flush: No hand dealt yet!");
+        nullText.setText("No hand dealt yet!");
       } else {
         boolean flush = hand.isFlush();
-        System.out.println("Flush: " + flush);
         flushText.setText("Flush: " + flush);
-      }
-    });
-
-    Button sumButton = new Button("Face sum");
-    sumButton.setOnAction(e -> {
-      if (hand == null) {
-        System.out.println("No hand dealt yet!");
-        sumText.setText("Deal hand: No hand dealt yet!");
-      } else {
         int sum = hand.getSum();
-        System.out.println("Face Sum: " + sum);
         sumText.setText("Face Sum: " + sum);
       }
     });
 
     ButtonBar buttonBar = new ButtonBar();
-    buttonBar.getButtons().addAll(dealButton, flushButton, sumButton);
+    buttonBar.getButtons().addAll(dealButton, flushButton);
     buttonBar.setStyle(
         "-fx-focus-color: transparent; " +
         "-fx-faint-focus-color: transparent;"
     );
+
+    //STACKPANE
+
+    StackPane textBox = new StackPane(text);
+    textBox.setStyle(
+        "-fx-background-color: #40c140; " +
+            "-fx-background-radius: 5;" +
+            "-fx-padding:20; " +
+            "-fx-border-radius: 5;"
+    );
+    textBox.setLayoutX(25.0);
+    textBox.setLayoutY(25.0);
+
     StackPane buttonBox = new StackPane(buttonBar);
     buttonBox.setStyle(
         "-fx-background-color: #40c140; " +
         "-fx-background-radius: 5;" +
-        "-fx-padding: 20; " +
+        "-fx-padding: 18; " +
         "-fx-border-radius: 5;"
     );
-    buttonBox.setLayoutX(555.0);
+    buttonBox.setLayoutX(200.0);
     buttonBox.setLayoutY(25.0);
 
     Pane gameBox = new Pane();
@@ -110,20 +118,21 @@ public class Main extends Application {
         "-fx-border-color: #40c140;" +
         "-fx-border-width: 2;"
     );
-    gameBox.setPrefSize(850,460);
+    gameBox.setPrefSize(400,100);
     gameBox.setLayoutX(25.0);
     gameBox.setLayoutY(115.0);
-    gameBox.getChildren().addAll(handText, flushText, sumText);
+
+    gameBox.getChildren().addAll(handText, flushText, sumText,
+        heartsText, spadeQueenText, nullText);
 
     Group root = new Group();
     ObservableList<Node> children = root.getChildren();
-    children.add(textBox);
-    children.add(buttonBox);
-    children.add(gameBox);
+    children.addAll(textBox, buttonBox, gameBox);
 
-    Scene scene = new Scene(root,900, 600);
+    //SCENE
+
+    Scene scene = new Scene(root,460,240);
     scene.setFill(Color.LIGHTGREY);
-
     stage.setTitle("Card Game");
     stage.setScene(scene);
     stage.show();
