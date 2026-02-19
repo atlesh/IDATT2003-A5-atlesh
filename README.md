@@ -1,2 +1,3 @@
-#A5: Praktisk programmeringsoppgave
+### A5: Praktisk programmeringsoppgave
+
 Atle Sandnes Halvorsen
