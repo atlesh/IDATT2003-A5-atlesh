@@ -45,7 +45,7 @@ public class Main extends Application {
     sumText.setLayoutX(150.0);
     sumText.setLayoutY(50.0);
 
-    Text heartsText = new Text("Cards of hearts: ");
+    Text heartsText = new Text("Hearts: ");
     heartsText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
     heartsText.setLayoutX(250.0);
     heartsText.setLayoutY(25.0);
@@ -74,10 +74,10 @@ public class Main extends Application {
       if (hand == null) {
         nullText.setText("No hand dealt yet!");
       } else {
-        boolean flush = hand.isFlush();
-        flushText.setText("Flush: " + flush);
-        int sum = hand.getSum();
-        sumText.setText("Face Sum: " + sum);
+        flushText.setText("Flush: " + hand.isFlush());
+        sumText.setText("Face Sum: " + hand.getSum());
+        spadeQueenText.setText("Queen of spades: " + hand.checkQueenOfSpades());
+        heartsText.setText("Hearts: " + hand.getHearts());
       }
     });
 
